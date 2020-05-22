@@ -9,7 +9,7 @@ export interface AppError extends Error {
     code: string
 }
 
-debug('eth:server')
+const debugServer: debug.Debugger = debug('adder:server')
 
 function normalizePort(val: string): string | number | null {
   const port = parseInt(val, 10)
@@ -42,8 +42,8 @@ function onError(error: AppError): never {
 
 function onListening(): void {
   const addr = server.address()
-  const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr && addr!.port
-  debug('Listening on ' + bind)
+  const bind = typeof addr === 'string' ? 'pipe ' + addr : 'http://localhost:' + (addr && addr!.port)
+  debugServer('now listening on ' + bind)
 }
 
 server.listen(port)
