@@ -1,0 +1,24 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2015,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "extends": [
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": {
+        "@typescript-eslint/class-name-casing": "warn",
+        "@typescript-eslint/member-delimiter-style": ["error", {
+            "multiline": { "delimiter": "none" }
+        }],
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "eqeqeq": "warn",
+        "no-throw-literal": "warn",
+        "semi": ["error", "never"]
+    }
+}
