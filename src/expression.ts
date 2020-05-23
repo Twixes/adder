@@ -1,17 +1,24 @@
+import * as readlineSync from 'readline-sync'
+
 type PowerCoefficientPair = [number, number]
+type ExpressionRaw = PowerCoefficientPair[]
 
 export class Expression {
     coefficientToPower: Map<number, number> = new Map()
 
-    constructor(input?: PowerCoefficientPair[] | Map<number, number>) {
+    constructor(input?: ExpressionRaw | Map<number, number>) {
         if (input) {
             if (Array.isArray(input)) this.coefficientToPower = new Map(input)
             else this.coefficientToPower = input
         }
     }
 
+    toPowerCoefficientPairs(): PowerCoefficientPair[] {
+        return Array.from(this.coefficientToPower.entries()).filter(([, coefficient]) => coefficient !== 0)
+    }
+
     toString(): string {
-        const powerCoefficientPairs: PowerCoefficientPair[] = Array.from(this.coefficientToPower.entries()).sort(
+        const powerCoefficientPairs: ExpressionRaw = Array.from(this.coefficientToPower.entries()).sort(
             (a: PowerCoefficientPair, b: PowerCoefficientPair) => b[0] - a[0]
         )
         let stringSoFar = ''
@@ -36,10 +43,10 @@ export class Expression {
         return stringSoFar
     }
 
-    calculateFor(inputValue: number): number {
+    calculateFor(variableValue: number): number {
         let y = 0
         for (const [power, coefficient] of this.coefficientToPower.entries()) if (coefficient) {
-            y += coefficient * inputValue**power
+            y += coefficient * variableValue**power
         }
         return y
     }
@@ -55,3 +62,53 @@ export class Expression {
         return sum
     }
 }
+
+function commandLineLoop(): void {
+    const options: string[] = ['SUM', 'CALCULATE']
+    let optionIndex = -1
+    while (true) {
+        optionIndex = readlineSync.keyInSelect(['SUM', 'CALCULATE'], 'What do you want to do?')
+        if (options[optionIndex] === 'SUM') {
+            const expressionsRawInput: string = readlineSync.question(
+                'Provide array of raw expressions: '
+            )
+            try {
+                const expressionsRaw: ExpressionRaw[] = JSON.parse(expressionsRawInput)
+                if (!Array.isArray(expressionsRaw)) throw TypeError('expressionsRawInput is not an array')
+                const sum: Expression = Expression.sum(...expressionsRaw.map(
+                    expressionRawCandidate => new Expression(expressionRawCandidate)
+                ))
+                console.log(sum.toPowerCoefficientPairs())
+                console.log(sum.toString())
+            } catch (err) {
+                console.log(err.toString())
+                continue
+            }
+        } else if (options[optionIndex] === 'CALCULATE') {
+            const expressionRawInput: string = readlineSync.question(
+                'Provide raw expression: '
+            )
+            let expression: Expression
+            try {
+                const expressionRaw: ExpressionRaw = JSON.parse(expressionRawInput)
+                if (!Array.isArray(expressionRaw)) throw TypeError('expressionRawInput is not an array')
+                expression = new Expression(expressionRaw)
+            } catch (err) {
+                console.log(err.toString())
+                continue
+            }
+            const variableValue: number = readlineSync.questionFloat('Provide variable x value: ')
+            try {
+                const result: number = expression.calculateFor(variableValue)
+                console.log(result)
+            } catch (err) {
+                console.log(err.toString())
+                continue
+            }
+        } else {
+            break
+        }
+    }
+}
+
+if (require.main === module) commandLineLoop()

@@ -9,7 +9,8 @@
     "lint": "eslint src --ext ts",
     "test": "npm run compile && npm run lint && mocha 'dist/tests/*.test.js'",
     "start": "node ./dist/start.js",
-    "develop": "npm test && npm start"
+    "develop": "npm test && npm start",
+    "expression": "node ./dist/expression.js"
   },
   "dependencies": {
     "@types/debug": "~4.1.5",
