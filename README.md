@@ -17,7 +17,7 @@ You can get debug information printed by setting shell variable `DEBUG` like thi
 * `export DEBUG="*"` to see all debug information
 * `export DEBUG="adder:*"` to only see information specific to this project
 
-Or you can change server port from the default 3000 to e.g. 999 by setting shell variable `PORT` like this `export PORT="999"`.
+Or you can change server port from the default 3000 to, say, 999 by setting shell variable `PORT` like this `export PORT="999"`.
 
 ## Data format
 
