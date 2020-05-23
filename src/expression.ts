@@ -1,6 +1,5 @@
 type PowerCoefficientPair = [number, number]
 
-
 export class Expression {
     coefficientToPower: Map<number, number> = new Map()
 
@@ -37,10 +36,10 @@ export class Expression {
         return stringSoFar
     }
 
-    calculateFor(x: number): number {
+    calculateFor(inputValue: number): number {
         let y = 0
         for (const [power, coefficient] of this.coefficientToPower.entries()) if (coefficient) {
-            y += coefficient * x**power
+            y += coefficient * inputValue**power
         }
         return y
     }

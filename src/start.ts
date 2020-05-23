@@ -2,7 +2,7 @@
 
 import * as http from 'http'
 import * as debug from 'debug'
-import * as app from './app'
+import { app } from './app'
 
 interface AppError extends Error {
     syscall: string
