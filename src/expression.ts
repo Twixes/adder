@@ -1,12 +1,13 @@
 import * as readlineSync from 'readline-sync'
 
+type PowerToCoefficientMap = Map<number, number>
 type PowerCoefficientPair = [number, number]
 type ExpressionRaw = PowerCoefficientPair[]
 
 export class Expression {
-    coefficientToPower: Map<number, number> = new Map()
+    coefficientToPower: PowerToCoefficientMap = new Map()
 
-    constructor(input?: ExpressionRaw | Map<number, number>) {
+    constructor(input?: ExpressionRaw | PowerToCoefficientMap) {
         if (input) {
             if (Array.isArray(input)) this.coefficientToPower = new Map(input)
             else this.coefficientToPower = input
