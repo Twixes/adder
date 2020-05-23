@@ -17,8 +17,8 @@ router.get('/sum/', (req: express.Request, res: express.Response) => {
 
 router.get('/calculate/', (req: express.Request, res: express.Response) => {
     const expression: Expression = new Expression(req.body.expressionRaw)
-    const inputValue: number = req.body.inputValue
+    const variableValue: number = req.body.variableValue
     res.json({
-        result: expression.calculateFor(inputValue)
+        result: expression.calculateFor(variableValue)
     })
 })
