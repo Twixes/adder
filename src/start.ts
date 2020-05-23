@@ -23,7 +23,7 @@ app.set('port', port)
 
 const server: http.Server = http.createServer(app)
 
-function onError(error: AppError): never {
+function onError(error: AppError): void {
   if (error.syscall !== 'listen') throw error
   const bind: string = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port
   switch (error.code) {
