@@ -48,10 +48,10 @@ field              | type                 | description
 #### GET `/calculate`
 
 ##### Request – `application/json`
-field              | type                 | description                       | default
------------------- | -------------------- | --------------------------------- | ----------
-`expressionRaw`    | `[number, number][]` | expression to use for calculation | *required*
-`variableValue`    | `number`             | input value (x)                   | *required*
+field           | type                 | description                       | default
+--------------- | -------------------- | --------------------------------- | ----------
+`expressionRaw` | `[number, number][]` | expression to use for calculation | *required*
+`variableValue` | `number`             | input value (x)                   | *required*
 
 ##### Response – `application/json`
 field    | type     | description
