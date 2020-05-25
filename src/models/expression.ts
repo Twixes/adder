@@ -7,21 +7,33 @@ type ExpressionRaw = PowerCoefficientPair[]
 export class Expression {
     coefficientToPower: PowerToCoefficientMap = new Map()
 
+    private static checkPairs(pairs: PowerCoefficientPair[]): PowerCoefficientPair[] {
+        return pairs.filter(
+            ([power, coefficient]) => {
+                if (typeof power !== 'number') throw TypeError('power is not number')
+                if (typeof coefficient !== 'number') throw TypeError('coefficient is not number')
+                return coefficient
+            }
+        )
+    }
+
     constructor(input?: ExpressionRaw | PowerToCoefficientMap) {
         if (input) {
-            if (Array.isArray(input)) this.coefficientToPower = new Map(input)
-            else this.coefficientToPower = input
+            if (Array.isArray(input)) this.coefficientToPower = new Map(Expression.checkPairs(input))
+            else this.coefficientToPower = new Map(Expression.checkPairs(Array.from(input.entries())))
         }
     }
 
-    toPowerCoefficientPairs(): PowerCoefficientPair[] {
-        return Array.from(this.coefficientToPower.entries()).filter(([, coefficient]) => coefficient !== 0)
+    toPowerCoefficientPairs(sort = true): PowerCoefficientPair[] {
+        const pairs: PowerCoefficientPair[] = Expression.checkPairs(Array.from(this.coefficientToPower.entries()))
+        if (sort) return pairs.sort(
+            (a: PowerCoefficientPair, b: PowerCoefficientPair) => b[0] - a[0]
+        )
+        return pairs
     }
 
     toString(): string {
-        const powerCoefficientPairs: ExpressionRaw = Array.from(this.coefficientToPower.entries()).sort(
-            (a: PowerCoefficientPair, b: PowerCoefficientPair) => b[0] - a[0]
-        )
+        const powerCoefficientPairs: ExpressionRaw = this.toPowerCoefficientPairs()
         let stringSoFar = ''
         for (const [power, coefficient] of powerCoefficientPairs) {
             if (coefficient === 0) continue
@@ -33,20 +45,13 @@ export class Expression {
                 power !== 1 && power !== 0 ? (power < 0 ? `^(${power})` : `^${power}`) : ''
             ].join('')
         }
-        powerCoefficientPairs.filter(([, coefficient]) => coefficient !== 0).map(
-            ([power, coefficient]) => [
-                coefficient !== 1 ? `${coefficient}` : '',
-                coefficient !== 1 && power !== 0 ? '*' : '',
-                power !== 0 ? 'x' : '',
-                power !== 1 && power !== 0 ? `^${power}` : ''
-            ].join('')
-        )
         return stringSoFar
     }
 
     calculateFor(variableValue: number): number {
+        if (typeof variableValue !== 'number') throw TypeError('variableValue is not a number')
         let y = 0
-        for (const [power, coefficient] of this.coefficientToPower.entries()) if (coefficient) {
+        for (const [power, coefficient] of this.toPowerCoefficientPairs(false)) {
             y += coefficient * variableValue**power
         }
         return y
@@ -56,7 +61,7 @@ export class Expression {
     static sum(...summands: Expression[]): Expression {
         const sum: Expression = new Expression()
         for (const summand of summands) {
-            for (const [power, coefficient] of summand.coefficientToPower.entries()) {
+            for (const [power, coefficient] of summand.toPowerCoefficientPairs(false)) {
                 sum.coefficientToPower.set(power, (sum.coefficientToPower.get(power) || 0) + coefficient)
             }
         }
