@@ -35,16 +35,20 @@ Internally that is stored as a `power => coefficient` map.
 #### GET `/sum`
 
 ##### Request – `application/json`
+
 field            | type                   | description                       | default
 ---------------- | ---------------------- | --------------------------------- | ----------
 `expressionsRaw` | `[number, number][][]` | array of expressions to be summed | *required*
 
 ##### Response – `application/json`
+
 field              | type                 | description
 ------------------ | -------------------- | ---------------------------------------
 `expressionRaw`    | `[number, number][]` | expression that is the sum of all given
 `expressionString` | `string`             | string representation of the sum
+
 or
+
 field   | type     | description
 ------- | -------- | -------------
 `error` | `string` | error message
@@ -53,16 +57,20 @@ field   | type     | description
 #### GET `/calculate`
 
 ##### Request – `application/json`
+
 field           | type                 | description                       | default
 --------------- | -------------------- | --------------------------------- | ----------
 `expressionRaw` | `[number, number][]` | expression to use for calculation | *required*
 `variableValue` | `number`             | input value (x)                   | *required*
 
 ##### Response – `application/json`
+
 field    | type     | description
 -------- | -------- | -------------------------
 `result` | `number` | result of the calculation
+
 or
+
 field   | type     | description
 ------- | -------- | -------------
 `error` | `string` | error message
