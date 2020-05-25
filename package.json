@@ -4,13 +4,13 @@
   "author": "Twixes",
   "private": true,
   "scripts": {
-    "compile": "rm -r dist && tsc -p ./",
+    "compile": "rm -rf dist && tsc -p ./",
     "watch": "tsc -watch -p ./",
     "lint": "eslint src --ext ts",
     "test": "npm run compile && npm run lint && mocha 'dist/tests/**/*.test.js'",
     "start": "node ./dist/index.js",
     "develop": "npm test && npm start",
-    "expression": "node ./dist/expression.js"
+    "cli": "node ./dist/cli.js"
   },
   "dependencies": {
     "@types/debug": "~4.1.5",

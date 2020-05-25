@@ -10,7 +10,7 @@ Clone or download this repository and `cd` into its directory. Run `npm install`
 * `npm start` to start server
 * `npm test` to compile TS and then run all tests
 * `npm run develop` to compile TS, run all tests and start server – all in one
-* `npm run expression` to sum or calculate expressions from the command line, no server
+* `npm run cli` to sum or calculate expressions from the command line, no server
 
 You can get debug information printed by setting shell variable `DEBUG` like this:
 
