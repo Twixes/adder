@@ -8,8 +8,8 @@ export class Expression {
     private static checkPairs(pairs: PowerCoefficientPair[]): PowerCoefficientPair[] {
         return pairs.filter(
             ([power, coefficient]) => {
-                if (typeof power !== 'number') throw TypeError('power is not number')
-                if (typeof coefficient !== 'number') throw TypeError('coefficient is not number')
+                if (typeof power !== 'number') throw TypeError(`power ${power} is not a number`)
+                if (typeof coefficient !== 'number') throw TypeError(`coefficient ${coefficient} is not a number`)
                 return coefficient
             }
         )
@@ -47,7 +47,7 @@ export class Expression {
     }
 
     calculateFor(variableValue: number): number {
-        if (typeof variableValue !== 'number') throw TypeError('variableValue is not a number')
+        if (typeof variableValue !== 'number') throw TypeError(`variableValue ${variableValue} is not a number`)
         let y = 0
         for (const [power, coefficient] of this.toPowerCoefficientPairs(false)) {
             y += coefficient * variableValue**power
