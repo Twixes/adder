@@ -9,14 +9,15 @@ describe('Expression', () => {
             assert.deepStrictEqual(expression.coefficientToPower, new Map())
         })
         it('should work with Map<number, number> input', () => {
-            const map: Map<number, number> = new Map([[9, 6], [3, 0]])
+            const map: Map<number, number> = new Map([[9, 6], [3, 1]])
             const expression: Expression = new Expression(map)
             assert.deepStrictEqual(expression.coefficientToPower, map)
         })
-        it('should work with Array<number> input', () => {
-            const array: [number, number][] = [[10000000, -10000000], [0, 0]]
+        it('should work with Array<number> input and discard zero coefficient', () => {
+            const array: [number, number][] = [[10000000, -10000000], [7, 0]]
+            const arrayWithoutZero: [number, number][] = [[10000000, -10000000]]
             const expression: Expression = new Expression(array)
-            assert.deepStrictEqual(expression.coefficientToPower, new Map(array))
+            assert.deepStrictEqual(expression.coefficientToPower, new Map(arrayWithoutZero))
         })
     })
     describe('#toString()', () => {
