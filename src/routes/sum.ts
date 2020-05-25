@@ -5,12 +5,25 @@ export const router: express.Router = express.Router()
 
 router.get('/', (req: express.Request, res: express.Response) => {
     const expressions: Expression[] = []
-    for (const expressionRaw of req.body.expressionsRaw || []) {
-        expressions.push(new Expression(expressionRaw))
+    let sum: Expression
+    try {
+        for (const expressionRaw of req.body.expressionsRaw || []) {
+            expressions.push(new Expression(expressionRaw))
+        }
+        sum = Expression.sum(...expressions)
+    } catch (err) {
+        return res.status(400).json({
+            error: 'expressionsRaw malformed'
+        })
     }
-    const sum: Expression = Expression.sum(...expressions)
-    res.json({
-        expressionRaw: sum.toPowerCoefficientPairs(),
-        string: sum.toString()
-    })
+    try {
+        return res.json({
+            expressionRaw: sum.toPowerCoefficientPairs(),
+            expressionString: sum.toString()
+        })
+    } catch (err) {
+        return res.status(500).json({
+            error: 'server error'
+        })
+    }
 })
