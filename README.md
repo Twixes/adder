@@ -1,6 +1,6 @@
 # Adder
 
-A simple project for adding and calculating expressions of the form `Axᵃ + Bxᵇ + ...`. Written in TypeScript, linted with ESLint. Express.js server. Mocha tests.
+A simple project for adding and calculating expressions of the form `Axᵃ + Bxᵇ + ...`. Written in TypeScript, linted with ESLint. Express.js server. Mocha + SuperTest tests.
 
 ## Getting up and running
 
