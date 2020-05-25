@@ -4,7 +4,7 @@
   "author": "Twixes",
   "private": true,
   "scripts": {
-    "compile": "tsc -p ./",
+    "compile": "rm -r dist && tsc -p ./",
     "watch": "tsc -watch -p ./",
     "lint": "eslint src --ext ts",
     "test": "npm run compile && npm run lint && mocha 'dist/tests/**/*.test.js'",
