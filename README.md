@@ -43,6 +43,10 @@ field              | type                 | description
 ------------------ | -------------------- | ---------------------------------------
 `expressionRaw`    | `[number, number][]` | expression that is the sum of all given
 `expressionString` | `string`             | string representation of the sum
+or
+field   | type     | description
+------- | -------- | -------------
+`error` | `string` | error message
 
 ### Calculate Expression
 #### GET `/calculate`
@@ -57,3 +61,7 @@ field           | type                 | description                       | def
 field    | type     | description
 -------- | -------- | -------------------------
 `result` | `number` | result of the calculation
+or
+field   | type     | description
+------- | -------- | -------------
+`error` | `string` | error message
