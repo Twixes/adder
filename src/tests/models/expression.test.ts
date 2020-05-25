@@ -1,5 +1,5 @@
 import * as assert from 'assert'
-import { Expression } from '../expression'
+import { Expression } from '../../models/expression'
 
 describe('Expression', () => {
     describe('#constructor()', () => {

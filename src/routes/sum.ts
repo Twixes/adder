@@ -1,9 +1,9 @@
 import * as express from 'express'
-import { Expression } from './expression'
+import { Expression } from '../models/expression'
 
 export const router: express.Router = express.Router()
 
-router.get('/sum/', (req: express.Request, res: express.Response) => {
+router.get('/', (req: express.Request, res: express.Response) => {
     const expressions: Expression[] = []
     for (const expressionRaw of req.body.expressionsRaw || []) {
         expressions.push(new Expression(expressionRaw))
@@ -12,13 +12,5 @@ router.get('/sum/', (req: express.Request, res: express.Response) => {
     res.json({
         expressionRaw: sum.toPowerCoefficientPairs(),
         string: sum.toString()
-    })
-})
-
-router.get('/calculate/', (req: express.Request, res: express.Response) => {
-    const expression: Expression = new Expression(req.body.expressionRaw)
-    const variableValue: number = req.body.variableValue
-    res.json({
-        result: expression.calculateFor(variableValue)
     })
 })
